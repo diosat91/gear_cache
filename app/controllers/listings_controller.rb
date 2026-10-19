@@ -71,8 +71,13 @@ class ListingsController < ApplicationController
   end
 
   def listing_params
-    params.expect(listing: [:title, :description, :brand, :category_id, :condition,
-                            :safety_critical, :price_per_day, :deposit, :currency,
-                            :location_text, :status, { photos: [] }])
+    permitted = params.expect(listing: [:title, :description, :brand, :category_id, :condition,
+                                        :safety_critical, :price_per_day, :deposit, :currency,
+                                        :location_text, :status, { photos: [] }])
+
+    # An empty multi-file field submits photos: [""], which purges all
+    # attachments. Drop the key when nothing was actually selected.
+    permitted.delete(:photos) if permitted[:photos].is_a?(Array) && permitted[:photos].all?(&:blank?)
+    permitted
   end
 end

@@ -33,6 +33,20 @@ RSpec.describe "Listings", type: :request do
     expect(created.price_per_day_cents).to eq(1000)
   end
 
+  it "keeps photos attached when updating without new files" do
+    sign_in owner
+    listing.photos.attach(
+      io: File.open(Rails.root.join("spec/fixtures/files/pixel.png")),
+      filename: "pixel.png", content_type: "image/png"
+    )
+
+    patch listing_path(listing), params: {
+      listing: { title: "Renamed", photos: [""] }
+    }
+
+    expect(listing.reload.photos.attachments.count).to eq(1)
+  end
+
   it "hides archived listings from browse" do
     listing.update!(status: :archived)
     get listings_path
