@@ -1,15 +1,14 @@
 FactoryBot.define do
   factory :listing do
-    owner { nil }
-    category { nil }
-    title { "MyString" }
-    description { "MyText" }
-    brand { "MyString" }
-    condition { 1 }
-    safety_critical { false }
-    price_per_day_cents { 1 }
-    deposit_cents { 1 }
-    location_text { "MyString" }
-    status { 1 }
+    owner { association(:user) }
+    category
+    title { "BD Camalots, full rack" }
+    description { "Well-maintained set, used ~2 seasons." }
+    brand { "Black Diamond" }
+    condition { :good }
+    location_text { "Boulder, CO" }
+    price_per_day_cents { 2500 }
+    deposit_cents { 10000 }
+    status { :active }
   end
 end

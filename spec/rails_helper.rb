@@ -23,7 +23,12 @@ require 'rspec/rails'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-# Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
+Rails.root.glob('spec/support/**/*.rb').sort_by(&:to_s).each { |f| require f }
+
+# Routes lazy-load in test env, which leaves Devise.mappings empty until the
+# first request — breaking sign_in helpers in specs that don't hit the router
+# first. Force the load here.
+Rails.application.reload_routes!
 
 # Ensures that the test database schema matches the current schema file.
 # If there are pending migrations it will invoke `db:test:prepare` to

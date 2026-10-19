@@ -1,0 +1,21 @@
+<h1>My bookings</h1>
+
+<% if @bookings.any? %>
+  <ul class="booking-list">
+    <% @bookings.each do |booking| %>
+      <li>
+        <strong><%= link_to booking.listing.title, booking.listing %></strong>
+        <span class="muted">from <%= booking.listing.owner.name %></span><br>
+        <%= booking.start_on %> → <%= booking.end_on %>
+        · <%= number_to_currency(booking.subtotal_cents / 100.0) %>
+        · <strong><%= booking.status.humanize %></strong>
+        <% if booking.requested? || booking.approved? %>
+          <%= button_to "Cancel", cancel_booking_path(booking), method: :patch,
+                data: { turbo_confirm: "Cancel this booking?" } %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No bookings yet. <%= link_to "Browse gear", listings_path %>.</p>
+<% end %>

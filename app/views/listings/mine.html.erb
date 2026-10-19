@@ -1,0 +1,17 @@
+<h1>My gear</h1>
+
+<p><%= link_to "List new gear", new_listing_path %></p>
+
+<% if @listings.any? %>
+  <ul class="booking-list">
+    <% @listings.each do |listing| %>
+      <li>
+        <%= link_to listing.title, listing %> —
+        <span class="muted"><%= listing.status.humanize %> · <%= number_to_currency(listing.price_per_day) %>/day</span>
+        <%= link_to "Edit", edit_listing_path(listing) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>You haven't listed anything yet.</p>
+<% end %>

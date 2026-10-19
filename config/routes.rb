@@ -1,5 +1,21 @@
 Rails.application.routes.draw do
   devise_for :users
+
+  resources :listings do
+    resources :bookings, only: :create, shallow: true
+    get :mine, on: :collection
+  end
+
+  resources :bookings, only: :index do
+    get :requests, on: :collection
+    member do
+      patch :approve
+      patch :decline
+      patch :pickup
+      patch :dropoff
+      patch :cancel
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -1,0 +1,62 @@
+<div class="listing-detail">
+  <div class="listing-photos">
+    <% if @listing.photos.attached? %>
+      <% @listing.photos.each do |photo| %>
+        <%= image_tag photo %>
+      <% end %>
+    <% else %>
+      <div class="listing-card-photo placeholder"><%= @listing.category.name %></div>
+    <% end %>
+  </div>
+
+  <div class="listing-info">
+    <h1><%= @listing.title %></h1>
+    <p class="muted"><%= @listing.category.name %> · <%= @listing.location_text %></p>
+    <p><strong><%= number_to_currency(@listing.price_per_day) %></strong>/day
+       · <%= number_to_currency(@listing.deposit) %> deposit</p>
+    <p>Condition: <%= @listing.condition.humanize %>
+       <% if @listing.brand.present? %> · <%= @listing.brand %><% end %></p>
+
+    <% if @listing.safety_critical? %>
+      <p class="alert">⚠ Safety-critical gear — check the owner's gear log before renting.</p>
+    <% end %>
+
+    <p><%= simple_format @listing.description %></p>
+
+    <% if @listing.gear_logs.any? %>
+      <h2>Gear log</h2>
+      <ul>
+        <% @listing.gear_logs.each do |log| %>
+          <li><%= log.happened_on %> — <strong><%= log.kind.humanize %></strong><%= ": #{log.body}" if log.body.present? %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <p class="muted">Listed by <%= @listing.owner.name %></p>
+
+    <% if @listing.owner == current_user %>
+      <p>
+        <%= link_to "Edit", edit_listing_path(@listing) %> ·
+        <%= link_to "Archive", listing_path(@listing), data: { turbo_method: :delete, turbo_confirm: "Archive this listing?" } %>
+      </p>
+    <% elsif @my_request %>
+      <p>Your request is <strong><%= @my_request.status.humanize %></strong>
+         (<%= @my_request.start_on %> → <%= @my_request.end_on %>).</p>
+    <% elsif user_signed_in? %>
+      <h2>Request to borrow</h2>
+      <%= form_with model: [@listing, @booking] do |f| %>
+        <div class="field">
+          <%= f.label :start_on, "From" %><br>
+          <%= f.date_field :start_on, min: Date.current, required: true %>
+        </div>
+        <div class="field">
+          <%= f.label :end_on, "To" %><br>
+          <%= f.date_field :end_on, min: Date.current, required: true %>
+        </div>
+        <div class="actions"><%= f.submit "Request booking" %></div>
+      <% end %>
+    <% else %>
+      <p><%= link_to "Sign in to request this gear", new_user_session_path %></p>
+    <% end %>
+  </div>
+</div>

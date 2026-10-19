@@ -1,0 +1,33 @@
+<h1>Borrow gear</h1>
+
+<%= form_with url: listings_path, method: :get, class: "filters" do |f| %>
+  <%= f.text_field :q, value: params[:q], placeholder: "Search gear…" %>
+  <%= f.select :category,
+        grouped_options_for_select(
+          @categories.map { |c| [c.name, c.subcategories.map { |s| [s.name, s.slug] }.unshift([c.name, c.slug])] },
+          params[:category]),
+        { include_blank: "All categories" } %>
+  <%= f.text_field :location, value: params[:location], placeholder: "Location" %>
+  <%= f.submit "Filter" %>
+<% end %>
+
+<% if @listings.any? %>
+  <div class="listing-grid">
+    <% @listings.each do |listing| %>
+      <%= link_to listing_path(listing), class: "listing-card" do %>
+        <% if listing.photos.attached? %>
+          <%= image_tag listing.photos.first, class: "listing-card-photo" %>
+        <% else %>
+          <div class="listing-card-photo placeholder"><%= listing.category.name %></div>
+        <% end %>
+        <div class="listing-card-body">
+          <h3><%= listing.title %></h3>
+          <p class="muted"><%= listing.category.name %> · <%= listing.location_text %></p>
+          <p><strong><%= number_to_currency(listing.price_per_day) %></strong>/day</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <p>No gear found. <%= link_to "List yours", new_listing_path %>.</p>
+<% end %>

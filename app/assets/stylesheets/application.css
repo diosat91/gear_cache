@@ -1,10 +1,118 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+ * Gear Cache — base styles. Dependency-free, plain CSS.
  */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #2d2a26;
+  background: #faf8f5;
+}
+
+main { max-width: 64rem; margin: 0 auto; padding: 1.5rem; }
+
+a { color: #b3502e; }
+
+/* Nav */
+nav {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: #2d2a26;
+}
+nav a { color: #faf8f5; text-decoration: none; }
+nav a.brand { font-weight: 700; font-size: 1.1rem; margin-right: auto; }
+
+/* Flash */
+.notice, .alert {
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+}
+.notice { background: #e4f0dc; color: #2d5a1e; }
+.alert  { background: #f8e2dd; color: #8c2f1b; }
+
+/* Hero */
+.hero { padding: 4rem 0; max-width: 36rem; }
+.hero h1 { font-size: 2.25rem; margin-bottom: 0.5rem; }
+
+/* Buttons & forms */
+.button, input[type="submit"], button {
+  display: inline-block;
+  background: #b3502e;
+  color: #fff;
+  border: 0;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button.secondary { background: transparent; color: #b3502e; border: 1px solid #b3502e; }
+
+.field { margin-bottom: 1rem; }
+.field input[type="text"], .field input[type="email"], .field input[type="password"],
+.field input[type="number"], .field input[type="date"], .field textarea, .field select {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.5rem;
+  border: 1px solid #d6cfc7;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+}
+
+.filters { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.filters input, .filters select {
+  padding: 0.5rem;
+  border: 1px solid #d6cfc7;
+  border-radius: 0.375rem;
+}
+
+/* Listing grid & cards */
+.listing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+.listing-card {
+  display: block;
+  background: #fff;
+  border: 1px solid #e8e2da;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+.listing-card-photo { width: 100%; height: 10rem; object-fit: cover; display: block; }
+.listing-card-photo.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8e2da;
+  color: #8a8178;
+  font-weight: 600;
+}
+.listing-card-body { padding: 0.75rem 1rem; }
+.listing-card-body h3 { margin: 0 0 0.25rem; }
+
+/* Listing detail */
+.listing-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+@media (max-width: 48rem) { .listing-detail { grid-template-columns: 1fr; } }
+.listing-photos img { width: 100%; border-radius: 0.5rem; margin-bottom: 0.5rem; }
+.listing-photos .placeholder { height: 16rem; }
+
+/* Booking lists */
+.booking-list { list-style: none; padding: 0; }
+.booking-list li {
+  background: #fff;
+  border: 1px solid #e8e2da;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+.booking-list form { display: inline; }
+
+.muted { color: #8a8178; }

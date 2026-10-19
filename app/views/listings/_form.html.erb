@@ -1,0 +1,74 @@
+<%= form_with model: listing do |f| %>
+  <% if listing.errors.any? %>
+    <div class="alert">
+      <ul>
+        <% listing.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title, required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :category_id, "Category" %><br>
+    <%= f.select :category_id,
+          grouped_options_for_select(
+            Category.where(parent: nil).includes(:subcategories).order(:name).map { |c|
+              [c.name, c.subcategories.map { |s| [s.name, s.id] }.unshift([c.name, c.id])]
+            }, listing.category_id) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description, rows: 4 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :brand %><br>
+    <%= f.text_field :brand %>
+  </div>
+
+  <div class="field">
+    <%= f.label :condition %><br>
+    <%= f.select :condition, Listing.conditions.keys.map { |c| [c.humanize, c] } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :photos %><br>
+    <%= f.file_field :photos, multiple: true, accept: "image/*" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :price_per_day, "Price per day ($)" %><br>
+    <%= f.number_field :price_per_day, step: 0.01, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :deposit, "Deposit ($)" %><br>
+    <%= f.number_field :deposit, step: 0.01, min: 0 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :location_text, "Pickup area" %><br>
+    <%= f.text_field :location_text, placeholder: "e.g. Boulder, CO" %>
+  </div>
+
+  <div class="field">
+    <%= f.check_box :safety_critical %>
+    <%= f.label :safety_critical, "Safety-critical gear (rope, harness, protection…)" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.select :status, Listing.statuses.keys.map { |s| [s.humanize, s] } %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

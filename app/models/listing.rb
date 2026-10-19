@@ -10,4 +10,20 @@ class Listing < ApplicationRecord
 
   validates :title, :location_text, presence: true
   validates :price_per_day_cents, :deposit_cents, numericality: { greater_than_or_equal_to: 0 }
+
+  def price_per_day
+    price_per_day_cents / 100.0
+  end
+
+  def price_per_day=(value)
+    self.price_per_day_cents = (value.to_f * 100).round
+  end
+
+  def deposit
+    deposit_cents / 100.0
+  end
+
+  def deposit=(value)
+    self.deposit_cents = (value.to_f * 100).round
+  end
 end
