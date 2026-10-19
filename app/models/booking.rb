@@ -41,6 +41,7 @@ class Booking < ApplicationRecord
     self.days = (end_on - start_on).to_i + 1 if start_on && end_on
     self.daily_rate_cents = listing.price_per_day_cents
     self.deposit_cents = listing.deposit_cents
+    self.currency = listing.currency
     self.subtotal_cents = days * daily_rate_cents if days && daily_rate_cents
   end
 

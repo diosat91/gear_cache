@@ -7,7 +7,7 @@
     <% @listings.each do |listing| %>
       <li>
         <%= link_to listing.title, listing %> —
-        <span class="muted"><%= listing.status.humanize %> · <%= number_to_currency(listing.price_per_day) %>/day</span>
+        <span class="muted"><%= listing.status.humanize %> · <%= money(listing.price_per_day_cents, listing.currency) %>/day</span>
         <%= link_to "Edit", edit_listing_path(listing) %>
       </li>
     <% end %>

@@ -72,7 +72,7 @@ class ListingsController < ApplicationController
 
   def listing_params
     params.expect(listing: [:title, :description, :brand, :category_id, :condition,
-                            :safety_critical, :price_per_day, :deposit, :location_text,
-                            :status, { photos: [] }])
+                            :safety_critical, :price_per_day, :deposit, :currency,
+                            :location_text, :status, { photos: [] }])
   end
 end

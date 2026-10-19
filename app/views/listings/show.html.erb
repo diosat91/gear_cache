@@ -12,8 +12,8 @@
   <div class="listing-info">
     <h1><%= @listing.title %></h1>
     <p class="muted"><%= @listing.category.name %> · <%= @listing.location_text %></p>
-    <p><strong><%= number_to_currency(@listing.price_per_day) %></strong>/day
-       · <%= number_to_currency(@listing.deposit) %> deposit</p>
+    <p><strong><%= money(@listing.price_per_day_cents, @listing.currency) %></strong>/day
+       · <%= money(@listing.deposit_cents, @listing.currency) %> deposit</p>
     <p>Condition: <%= @listing.condition.humanize %>
        <% if @listing.brand.present? %> · <%= @listing.brand %><% end %></p>
 

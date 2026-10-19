@@ -44,12 +44,17 @@
   </div>
 
   <div class="field">
-    <%= f.label :price_per_day, "Price per day ($)" %><br>
+    <%= f.label :currency %><br>
+    <%= f.select :currency, Listing::CURRENCIES %>
+  </div>
+
+  <div class="field">
+    <%= f.label :price_per_day, "Price per day" %><br>
     <%= f.number_field :price_per_day, step: 0.01, min: 0 %>
   </div>
 
   <div class="field">
-    <%= f.label :deposit, "Deposit ($)" %><br>
+    <%= f.label :deposit, "Deposit" %><br>
     <%= f.number_field :deposit, step: 0.01, min: 0 %>
   </div>
 

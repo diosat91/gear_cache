@@ -7,7 +7,7 @@
         <strong><%= booking.renter.name %></strong> wants
         <strong><%= link_to booking.listing.title, booking.listing %></strong><br>
         <%= booking.start_on %> → <%= booking.end_on %>
-        · <%= number_to_currency(booking.subtotal_cents / 100.0) %>
+        · <%= money(booking.subtotal_cents, booking.currency) %>
         · <strong><%= booking.status.humanize %></strong>
 
         <% if booking.requested? %>

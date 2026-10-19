@@ -7,7 +7,7 @@
         <strong><%= link_to booking.listing.title, booking.listing %></strong>
         <span class="muted">from <%= booking.listing.owner.name %></span><br>
         <%= booking.start_on %> → <%= booking.end_on %>
-        · <%= number_to_currency(booking.subtotal_cents / 100.0) %>
+        · <%= money(booking.subtotal_cents, booking.currency) %>
         · <strong><%= booking.status.humanize %></strong>
         <% if booking.requested? || booking.approved? %>
           <%= button_to "Cancel", cancel_booking_path(booking), method: :patch,

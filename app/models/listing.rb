@@ -1,4 +1,7 @@
 class Listing < ApplicationRecord
+  CURRENCIES = %w[EUR USD GBP CHF].freeze
+
+
   belongs_to :owner, class_name: "User"
   belongs_to :category
   has_many :bookings, dependent: :destroy
@@ -10,6 +13,7 @@ class Listing < ApplicationRecord
 
   validates :title, :location_text, presence: true
   validates :price_per_day_cents, :deposit_cents, numericality: { greater_than_or_equal_to: 0 }
+  validates :currency, inclusion: { in: CURRENCIES }
 
   def price_per_day
     price_per_day_cents / 100.0

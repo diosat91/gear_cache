@@ -8,6 +8,7 @@ RSpec.describe Booking, type: :model do
     expect(booking.daily_rate_cents).to eq(booking.listing.price_per_day_cents)
     expect(booking.subtotal_cents).to eq(3 * booking.listing.price_per_day_cents)
     expect(booking.deposit_cents).to eq(booking.listing.deposit_cents)
+    expect(booking.currency).to eq(booking.listing.currency)
   end
 
   it "walks the happy path" do
